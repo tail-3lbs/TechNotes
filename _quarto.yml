@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Jiaqi's Tech Notes"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Tech Notes
+  page-footer:
+    left: "Technical notes and blog posts."
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    smooth-scroll: true
+    anchor-sections: true
+    code-copy: true
+    link-external-newwindow: true
+
+metadata-files:
+  - _metadata.yml

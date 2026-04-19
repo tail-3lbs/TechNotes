@@ -1,0 +1,66 @@
+---
+title: "Jiaqi's Tech Notes"
+page-layout: full
+body-classes: notes-home
+listing:
+  contents: notes/*/index.qmd
+  sort:
+    - "date-modified desc"
+    - "date desc"
+  type: grid
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  fields:
+    - title
+    - categories
+    - date
+    - date-modified
+---
+
+This is the public front page for technical notes, math notes, and longer-form blog posts. Each panel links to a full note page.
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".notes-home .quarto-grid-item .post-contents");
+  const makeSegment = (label, value) => {
+    const segment = document.createElement("span");
+    segment.className = "home-card-meta-segment";
+
+    const labelNode = document.createElement("span");
+    labelNode.className = "home-card-meta-label";
+    labelNode.textContent = `${label}:`;
+
+    const valueNode = document.createElement("span");
+    valueNode.className = "home-card-meta-value";
+    valueNode.textContent = value;
+
+    segment.append(labelNode, valueNode);
+    return segment;
+  };
+
+  for (const card of cards) {
+    const title = card.querySelector(".listing-title");
+    if (!title) continue;
+
+    const categories = [...card.querySelectorAll(".listing-category")]
+      .map((node) => node.textContent.trim())
+      .filter(Boolean);
+    const created = card.querySelector(".listing-date")?.textContent.trim() || "";
+    const modified = card.querySelector(".card-other-values .date-modified")?.textContent.trim() || "";
+
+    const meta = document.createElement("p");
+    meta.className = "home-card-meta";
+    meta.appendChild(makeSegment("Tags", categories.length ? categories.join(", ") : "-"));
+    if (created) meta.appendChild(makeSegment("Created", created));
+    if (modified) meta.appendChild(makeSegment("Modified", modified));
+
+    for (const node of [...card.children]) {
+      if (node !== title) node.remove();
+    }
+    card.appendChild(meta);
+  }
+});
+</script>
+```
