@@ -84,19 +84,11 @@ That is the key setting. After that, every push to the `master` branch will trig
 
 ### Site URL
 
-For the GitHub repository `https://github.com/tail-3lbs/TechNotes`, the expected Pages URL is:
+The expected Pages URL is:
 
 ```text
 https://tail-3lbs.github.io/TechNotes/
 ```
-
-This is inferred from the standard GitHub Pages project-site pattern:
-
-```text
-https://<github-username>.github.io/<repo-name>/
-```
-
-If you later rename the repo, transfer it, or switch to a custom domain, the URL will change accordingly.
 
 ## Adding a New Note
 
