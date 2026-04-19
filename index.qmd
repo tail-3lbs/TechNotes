@@ -18,7 +18,7 @@ listing:
     - date-modified
 ---
 
-This is the public front page for technical notes, math notes, and longer-form blog posts. Each panel links to a full note page.
+This is the front page for technical notes, math notes, and longer-form blog posts. Each panel links to a full note page.
 
 ```{=html}
 <script>
