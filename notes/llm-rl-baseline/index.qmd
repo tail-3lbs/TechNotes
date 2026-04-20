@@ -24,7 +24,7 @@ As explained above, we can write the core form of policy gradient as
 
 $$
 \nabla_\theta \log \pi_\theta \cdot \text{reward}
-$$
+$$ {#eq-policy-gradient-reward}
 
 So why are we allowed to add a baseline?
 
@@ -48,12 +48,12 @@ The figure below shows the core form of policy gradient and two ways of incorpor
 1. direct use:
    $$
    \nabla_\theta \log \pi_\theta \cdot \text{reward}
-   $$
+   $$ {#eq-direct-reward-form}
 
 2. subtracting a baseline:
    $$
    \nabla_\theta \log \pi_\theta \cdot (\text{reward} - \text{baseline})
-   $$
+   $$ {#eq-baseline-subtracted-form}
 
 <div style="margin-top: 3rem;">
 

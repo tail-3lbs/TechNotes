@@ -41,7 +41,7 @@ First, we can ignore the outer expectation in the objective. In practice, we sim
 $$
 \max_{\theta}\ \mathbb{E}_{(y,z)\sim\pi_\theta}\big[r(x,y,y^*)\big]
 -\tau\,\mathrm{KL}\big(\pi_\theta(x)\,\|\,\pi_{\theta_i}(x)\big)
-$$
+$$ {#eq-rl-objective}
 
 Here, the KL divergence is:
 
@@ -54,7 +54,7 @@ $$
 \left[
 \log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mid x)}
 \right]
-$$
+$$ {#eq-kl-definition}
 
 So the objective can be rewritten as:
 
@@ -64,13 +64,13 @@ $$
 \left[
 r(x,y,y^*)-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mid x)}
 \right]
-$$
+$$ {#eq-objective-rewritten}
 
 Next we construct the Lagrangian. The key point is to notice the following constraint:
 
 $$
 \sum_{y,z}\pi_\theta(y,z\mid x)=1
-$$
+$$ {#eq-policy-normalization}
 
 That is, for a given question, if we enumerate all possible long CoT sequences $z$ together with all responses $y$, their probabilities must sum to 1.
 
@@ -88,7 +88,7 @@ r(x,y,y^*)-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mid x)}
 \left(
 1-\sum_{y,z}\pi_\theta(y,z\mid x)
 \right)
-$$
+$$ {#eq-lagrangian}
 
 To solve the problem, we differentiate the Lagrangian with respect to $\pi_\theta$ and set the derivative to zero.
 
@@ -105,35 +105,35 @@ r-\tau\log\frac{\pi_\theta}{\pi_{\theta_i}}
 -\lambda
 =
 r-\tau\log\frac{\pi_\theta}{\pi_{\theta_i}}-\tau-\lambda
-$$
+$$ {#eq-lagrangian-derivative}
 
 Setting the derivative to zero, that is,
 
 $$
 \frac{\partial \mathcal{L}}{\partial \pi_\theta}=0
-$$
+$$ {#eq-stationary-condition}
 
 we obtain:
 
 $$
 r-\tau\log\frac{\pi_\theta}{\pi_{\theta_i}}-\tau-\lambda=0
-$$
+$$ {#eq-stationary-expanded}
 
 $$
 \frac{r}{\tau}-\log\frac{\pi_\theta}{\pi_{\theta_i}}-1-\frac{\lambda}{\tau}=0
-$$
+$$ {#eq-stationary-divided-by-tau}
 
 $$
 \log \pi_\theta
 =
 \frac{r}{\tau}+\log \pi_{\theta_i}-1-\frac{\lambda}{\tau}
-$$
+$$ {#eq-log-policy-solution}
 
 $$
 \pi_\theta
 =
 \pi_{\theta_i}\cdot \exp(r/\tau)\cdot \exp(-1-\lambda/\tau)
-$$
+$$ {#eq-policy-solution-unnormalized}
 
 The last term above is a constant, so this can be written as:
 
@@ -141,13 +141,13 @@ $$
 \pi_\theta
 =
 C\cdot \pi_{\theta_i}\cdot \exp(r/\tau)
-$$
+$$ {#eq-policy-solution-with-c}
 
 At this point, we already have the approximate form of the solution for $\pi_\theta$, except that we do not yet know the constant $C$. But from the normalization constraint that probabilities must sum to 1, we have:
 
 $$
 \sum_{y',z'} C\cdot \pi_{\theta_i}\cdot \exp(r/\tau)=1
-$$
+$$ {#eq-normalization-with-c}
 
 so
 
@@ -155,7 +155,7 @@ $$
 C
 =
 \frac{1}{\sum_{y',z'}\pi_{\theta_i}\cdot \exp(r/\tau)}
-$$
+$$ {#eq-c-definition}
 
 Putting everything together, we obtain:
 
@@ -164,7 +164,7 @@ $$
 =
 \frac{\pi_{\theta_i}\cdot \exp(r/\tau)}
 {\sum_{y',z'}\pi_{\theta_i}\cdot \exp(r/\tau)}
-$$
+$$ {#eq-policy-solution-fraction}
 
 Returning to the full notation, this becomes:
 
@@ -178,7 +178,7 @@ $$
 }
 =
 \pi_{\theta_i}(y,z\mid x)\cdot \exp\big(r(x,y,y^*)/\tau\big)/Z
-$$
+$$ {#eq-policy-solution-final}
 
 So we recover exactly the same formula as in the original paper.
 
@@ -198,7 +198,7 @@ r(x,y,y^*)-\tau\log Z-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mi
 \right)^2
 \right]
 \right]
-$$
+$$ {#eq-surrogate-loss}
 
 ## 4. Computing $\tau \log Z$ and Its Approximation
 
@@ -209,7 +209,7 @@ At the same time, we can show that the mean reward under the reward model, denot
 $$
 \tau \log Z \to \mathbb{E}_{(y,z)\sim\pi_{\theta_i}}[r(x,y,y^*)]
 \qquad \text{as } \tau \to \infty
-$$
+$$ {#eq-tau-log-z-limit}
 
 The proof is based on Taylor expansion followed by taking the limit.
 
@@ -218,19 +218,19 @@ We start from:
 $$
 Z = \sum_{y',z'} \pi_{\theta_i}(y', z' \mid x)\,
 \exp\!\left(\frac{r(x,y',y^*)}{\tau}\right)
-$$
+$$ {#eq-z-definition}
 
 Now notice that when $\tau$ goes to infinity,
 
 $$
 \exp\!\left(\frac{r}{\tau}\right) \approx 1 + \frac{r}{\tau}
-$$
+$$ {#eq-exp-taylor-approx}
 
 This comes from the Taylor expansion of $f(x)=e^x$ at $x=0$:
 
 $$
 e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
-$$
+$$ {#eq-exp-taylor-series}
 
 so when $x$ is small, we have $e^x \approx 1+x$.
 
@@ -243,7 +243,7 @@ Z \approx
 =
 1 + \frac{1}{\tau}
 \sum_{y',z'} \pi_{\theta_i}(y', z' \mid x)\, r(x,y',y^*)
-$$
+$$ {#eq-z-approximation}
 
 Hence,
 
@@ -254,13 +254,13 @@ $$
 1 + \frac{1}{\tau}
 \sum_{y',z'} \pi_{\theta_i}(y', z' \mid x)\, r(x,y',y^*)
 \right)
-$$
+$$ {#eq-log-z-approximation-step}
 
 Next, consider the Taylor expansion of $f(x)=\log(1+x)$ at $x=0$:
 
 $$
 \log(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+\cdots
-$$
+$$ {#eq-log1p-taylor-series}
 
 so when $x$ is small, we have $\log(1+x)\approx x$. Therefore,
 
@@ -269,7 +269,7 @@ $$
 \approx
 \frac{1}{\tau}
 \sum_{y',z'} \pi_{\theta_i}(y', z' \mid x)\, r(x,y',y^*)
-$$
+$$ {#eq-log-z-approximation}
 
 Multiplying both sides by $\tau$, we obtain
 
@@ -281,7 +281,7 @@ $$
 \sum_{y,z} \pi_{\theta_i}(y, z \mid x)\, r(x,y,y^*)
 =
 \mathbb{E}_{(y,z)\sim\pi_{\theta_i}}[r(x,y,y^*)]
-$$
+$$ {#eq-tau-log-z-mean-reward}
 
 So $\tau \log Z$ can be approximated by the expected reward under the reference policy, and in practice this is often further approximated by the empirical mean of sampled rewards.
 
@@ -301,7 +301,7 @@ r(x,y,y^*)-\tau\log Z-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mi
 \right)^2
 \right]
 \right]
-$$
+$$ {#eq-surrogate-loss-repeated}
 
 Based on the previous section, we first replace $\tau \log Z$ with $\bar r$:
 
@@ -317,7 +317,7 @@ r(x,y,y^*)-\bar r-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mid x)
 \right)^2
 \right]
 \right]
-$$
+$$ {#eq-surrogate-loss-with-rbar}
 
 We still do not need to focus on the outer expectation, because in practice we simply average the objective over the dataset $\mathcal D$. So for a fixed problem $x$, we define
 
@@ -330,7 +330,7 @@ L_x(\theta)
 r(x,y,y^*)-\bar r-\tau\log\frac{\pi_\theta(y,z\mid x)}{\pi_{\theta_i}(y,z\mid x)}
 \right)^2
 \right]
-$$
+$$ {#eq-lx-definition}
 
 For the inner expectation, in practice we sample $k$ answers from $\pi_{\theta_i}$. Therefore,
 
@@ -343,7 +343,7 @@ L_x(\theta)
 r(x,y_j,y^*)-\bar r-\tau\log\frac{\pi_\theta(y_j,z_j\mid x)}{\pi_{\theta_i}(y_j,z_j\mid x)}
 \right)^2
 \right]
-$$
+$$ {#eq-lx-sampled}
 
 Now we want the gradient with respect to $\theta$ rather than the gradient with respect to $\pi_\theta$. Then
 
@@ -359,7 +359,7 @@ r(x,y_j,y^*)-\bar r-\tau\log\frac{\pi_\theta(y_j,z_j\mid x)}{\pi_{\theta_i}(y_j,
 -\tau \nabla_\theta \log \pi_\theta(y_j,z_j\mid x)
 \right)
 \right]
-$$
+$$ {#eq-lx-gradient-step1}
 
 $$
 =
@@ -370,7 +370,7 @@ r(x,y_j,y^*)-\bar r-\tau\log\frac{\pi_\theta(y_j,z_j\mid x)}{\pi_{\theta_i}(y_j,
 \right)
 \nabla_\theta \log \pi_\theta(y_j,z_j\mid x)
 \right]
-$$
+$$ {#eq-lx-gradient-step2}
 
 $$
 =
@@ -382,7 +382,7 @@ $$
 \cdot
 \nabla_\theta \log \pi_\theta(y_j,z_j\mid x)
 \right]
-$$
+$$ {#eq-lx-gradient-step3}
 
 $$
 =
@@ -395,7 +395,7 @@ $$
 \log\frac{\pi_\theta(y_j,z_j\mid x)}{\pi_{\theta_i}(y_j,z_j\mid x)}
 \right)^2
 \right]
-$$
+$$ {#eq-lx-gradient-final}
 
 At this point, we obtain a gradient expression very close to Equation (3) in the paper. The only difference is the extra constant factor $-2\tau$ in front. This may look serious, especially because the sign is reversed. One possibility is that the derivation here is wrong. At the same time, this differentiation step is fairly simple, and since the discrepancy is only a constant factor and a sign, I am more inclined to think that the authors did not consider it important to write out the constant factor explicitly. Its effect can be absorbed into the learning rate. Also, in actual implementation, the authors already know whether they should do gradient ascent or gradient descent. The paper only needs to present the core computational part, which is sufficient for the purpose of the paper. So it is likely that the constant term was omitted.
 
@@ -412,25 +412,25 @@ $$
 \sum_{\tau \in D_k}
 \sum_{t=0}^{T}
 \nabla_\theta \log \pi_\theta(a_t \mid s_t)\big|_{\theta_k}\,\hat A_t
-$$
+$$ {#eq-vpg-gradient}
 
 Here, the advantage $A$ is defined as the expected return of an action minus an average return that does not depend on the action, that is, a baseline:
 
 $$
 A^\pi(s,a)=Q^\pi(s,a)-V^\pi(s)
-$$
+$$ {#eq-advantage-definition}
 
 So the core mathematical form of policy gradient is:
 
 $$
 \nabla_\theta \log \pi_\theta \cdot (r-\text{baseline})
-$$
+$$ {#eq-policy-gradient-core}
 
 The core part of the K1.5 gradient has exactly the same structure:
 
 $$
 \nabla_\theta \log \pi_\theta \cdot (r-\bar r)
-$$
+$$ {#eq-k1-gradient-core}
 
 This is exactly what the K1.5 authors mean when they write that *this gradient resembles the policy gradient, using the mean of the sampled rewards as the baseline*.
 
@@ -441,4 +441,4 @@ $$
 \left(
 \log\frac{\pi_\theta(y_j,z_j\mid x)}{\pi_{\theta_i}(y_j,z_j\mid x)}
 \right)^2
-$$
+$$ {#eq-k1-regularizer}
