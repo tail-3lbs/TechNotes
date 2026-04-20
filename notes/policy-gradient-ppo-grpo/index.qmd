@@ -76,9 +76,9 @@ $$
 \nabla_\theta \log \pi_\theta \cdot \text{weight}
 $$
 
-Once we have the gradient, we basically arrive at a trainable and optimizable starting point. However, practice shows that training may be unstable, convergence may be slow, and performance may be suboptimal. Therefore, people introduced the concept of a baseline to improve stability and training efficiency. (For example, see the discussion of baselines in the mathematical proof section of the `Kimi K1.5` technical report.)
+Once we have the gradient, we basically arrive at a trainable and optimizable starting point. However, practice shows that training may be unstable, convergence may be slow, and performance may be suboptimal. Therefore, people introduced the concept of a baseline to improve stability and training efficiency.
 
-In the policy gradient family of methods, the baseline is a function whose output has the same scale as the reward. It is used to subtract from the reward and adjust the weight on $\nabla_\theta \log \pi_\theta$. After introducing the baseline, we obtain the core expression used in policy gradient methods:
+In the policy gradient family of methods, the baseline is any term independent of the sampled action, used to reduce variance. It is used to subtract from the reward and adjust the weight on $\nabla_\theta \log \pi_\theta$. After introducing the baseline, we obtain the core expression used in policy gradient methods:
 
 $$
 \nabla_\theta \log \pi_\theta \cdot (r - \text{baseline})
@@ -154,7 +154,7 @@ $$
 
 The idea is to prevent the model from changing too much in a single update, so that training does not become overly aggressive.
 
-However, in practice, this operation mainly constrains the positive-advantage case. The reason is that the new objective includes one more step:
+Then the new objective includes one more step:
 
 $$
 \min\left(
@@ -163,7 +163,7 @@ $$
 \right)
 $$
 
-At first glance, clipping seems to constrain both positive and negative returns. But after taking the minimum, the negative-advantage, unclipped term is still exposed to the optimizer.
+This makes the optimization behaviour more complicated. Readers are encouraged to analyze the behavior when $A_t$ is positive or negative, and when the ratio $\frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}$ is greater than $1 + \epsilon$ or less than $1 - \epsilon$.
 
 The full PPO objective is therefore:
 
@@ -247,11 +247,17 @@ So far, we have discussed the third column of the table below: GRPO.
 
 ## Why a Critic Can Suppress Reflective CoT (long CoT)
 
-DeepSeek-style methods and Kimi K1.5 both remove the critic, that is, the value function. The explanation below is adapted from the Kimi K1.5 technical report.
+DeepSeek-style methods and Kimi K1.5 both remove the critic, that is, the value function. Beyond computational efficiency, one important motivation is related to reflective CoT, or long chain-of-thought reasoning.
 
 ![](images/no-critic.png){fig-align="center" width="90%"}
 
-Beyond higher training efficiency and lower computational cost, the core reason is the following: people found that reflective CoT, or long CoT, matters. Allowing the model to explore reasoning paths in CoT that may look “actually wrong” can still be meaningful for improving reasoning ability. However, an ideal value function may do exactly the opposite: it can react very sensitively to these seemingly wrong attempts made by the policy, and penalize them too early.
+Recent reasoning-focused LLM work suggests that strong reasoning often involves exploring intermediate paths that may look locally unpromising, partially wrong, or unnecessarily long. Even so, these paths can still be useful if they eventually lead to a correct or insightful final answer.
+
+A critic, however, is trained to estimate expected future return from intermediate states. In principle, this means it may assign low value to reasoning paths that do not look promising early on. If that happens, the policy may be discouraged from exploring those paths, even when they would have been useful in the full sequence.
+
+From this perspective, removing the critic is not only a computational simplification. It also avoids relying on an intermediate value estimate that may prematurely suppress exploratory reasoning.
+
+<div style="margin-top: 3rem;">
 
 ::: {.callout-tip appearance="simple"}
 **Main references**:
