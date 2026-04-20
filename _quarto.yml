@@ -11,6 +11,7 @@ website:
     right:
       - href: https://tail-3lbs.github.io/
         text: Personal Homepage
+        target: _blank
   page-footer:
     left: "Technical notes and blog posts."
 
