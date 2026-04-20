@@ -68,7 +68,7 @@ $$
 
 The core derivation of its gradient is shown below:
 
-![](images/policy-gradient.png){fig-align="center" width="60%" fig-cap="Derivation for Basic Policy Gradient"}
+![](images/policy-gradient.png){fig-align="center" width="60%"}
 
 The gradient obtained above can be viewed as a weighted average of $\nabla_\theta \log \pi_\theta$:
 
@@ -98,9 +98,9 @@ $$
 
 Once we have this core gradient estimation form, vanilla policy gradient is essentially established:
 
-![](images/key-eqs.png){fig-align="center" width="70%" fig-cap="Key Equations for Vanilla Policy Gradient"}
+![](images/key-eqs.png){fig-align="center" width="70%"}
 
-![](images/vanilla-policy-gradient.png){fig-align="center" width="70%" fig-cap="Vanilla Policy Gradient"}
+![](images/vanilla-policy-gradient.png){fig-align="center" width="70%"}
 
 Up to this point, we have discussed the first column of the table below: policy gradient.
 
@@ -120,7 +120,7 @@ The PPO algorithm was proposed by Schulman ([paper](https://arxiv.org/abs/1707.0
 
 As shown below, from the perspective of overall algorithmic structure, they are quite similar: both require a value function. The key difference lies in how the parameter $\theta$ is updated. PPO introduces a new objective function, which leads to improvements in stability, convergence speed, performance, and ease of implementation.
 
-![](images/pd-to-ppo.png){fig-align="center" width="99%" fig-cap="Vanilla Policy Gradient vs. PPO-Clip"}
+![](images/pd-to-ppo.png){fig-align="center" width="99%"}
 
 Unlike policy gradient, PPO does not directly solve the problem starting from the original objective:
 
@@ -249,7 +249,7 @@ So far, we have discussed the third column of the table below: GRPO.
 
 DeepSeek-style methods and Kimi K1.5 both remove the critic, that is, the value function. The explanation below is adapted from the Kimi K1.5 technical report.
 
-![](images/no-critic.png){fig-align="center" width="90%" fig-cap="No critic in DeepSeek R1 and Kimi K1.5"}
+![](images/no-critic.png){fig-align="center" width="90%"}
 
 Beyond higher training efficiency and lower computational cost, the core reason is the following: people found that reflective CoT, or long CoT, matters. Allowing the model to explore reasoning paths in CoT that may look “actually wrong” can still be meaningful for improving reasoning ability. However, an ideal value function may do exactly the opposite: it can react very sensitively to these seemingly wrong attempts made by the policy, and penalize them too early.
 
