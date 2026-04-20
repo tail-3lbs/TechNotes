@@ -90,6 +90,42 @@ The expected Pages URL is:
 https://tail-3lbs.github.io/TechNotes/
 ```
 
+### Google Search Console
+
+After the site is deployed, register the site in Google Search Console as a `URL prefix` property using:
+
+```text
+https://tail-3lbs.github.io/TechNotes/
+```
+
+Recommended verification options for this repo:
+
+1. `HTML file` upload
+2. `HTML tag`
+
+`HTML file` works well with this Quarto/GitHub Pages setup because the verification file can be committed at the repo root and published as a static asset.
+
+`HTML tag` also works, but it requires adding the verification meta tag into the rendered page head.
+
+### Indexing Checklist
+
+Use this checklist after a deploy:
+
+1. Confirm the site is live at `https://tail-3lbs.github.io/TechNotes/`.
+2. Confirm `https://tail-3lbs.github.io/TechNotes/robots.txt` loads.
+3. Confirm `https://tail-3lbs.github.io/TechNotes/sitemap.xml` loads.
+4. Open Google Search Console and verify the `URL prefix` property.
+5. Submit `https://tail-3lbs.github.io/TechNotes/sitemap.xml` in Search Console.
+6. Use `URL Inspection` on the homepage and one or two note pages.
+7. If Google reports the pages are not indexed yet, click `Request Indexing`.
+
+### Search Visibility Notes
+
+- Indexing is not immediate. It often takes days, sometimes longer.
+- A successful deploy and a valid sitemap improve crawlability, not ranking.
+- Very new GitHub Pages sites may not appear in Google results until Google recrawls them.
+- If you later move to a custom domain, add the new domain as its own Search Console property.
+
 ## Adding a New Note
 
 1. Create a new folder under `notes/`, for example `notes/my-new-note/`.

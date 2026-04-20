@@ -1,9 +1,12 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - robots.txt
 
 website:
   title: "Jiaqi's Tech Notes"
+  site-url: https://tail-3lbs.github.io/TechNotes/
   navbar:
     left:
       - href: index.qmd

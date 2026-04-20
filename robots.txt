@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tail-3lbs.github.io/TechNotes/sitemap.xml
