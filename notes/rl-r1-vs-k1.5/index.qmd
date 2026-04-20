@@ -1,6 +1,6 @@
 ---
 title: "RL: DeepSeek R1 vs Kimi K1.5"
-date: 2026-04-20
+date: 2025-03-31
 date-modified: 2026-04-20
 categories:
   - RL

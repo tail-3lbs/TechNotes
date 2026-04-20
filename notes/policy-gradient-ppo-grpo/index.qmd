@@ -1,6 +1,6 @@
 ---
 title: "Policy gradient, PPO and GRPO"
-date: 2026-04-19
+date: 2025-03-31
 date-modified: 2026-04-20
 categories:
   - RL
