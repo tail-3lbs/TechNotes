@@ -7,7 +7,10 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Tech Notes
+        text: TechNotes
+    right:
+      - href: https://tail-3lbs.github.io/
+        text: Personal Homepage
   page-footer:
     left: "Technical notes and blog posts."
 
