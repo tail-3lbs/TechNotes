@@ -12,24 +12,10 @@ format:
     title-block-style: default
 ---
 
-::: {.callout-tip appearance="simple"}
-**Main references**:
-
-1. **RL Basics**: [Spinning Up Part 1: Key Concepts in RL](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)
-2. **Policy Gradient Theory Basics**: [Spinning Up Part 3: Intro to Policy Optimization](https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html)
-3. **Basic Version of Policy Gradient**: [Spinning Up - Vanilla Policy Gradient](https://spinningup.openai.com/en/latest/algorithms/vpg.html)
-4. **PPO**: [Spinning Up - Proximal Policy Optimization](https://spinningup.openai.com/en/latest/algorithms/ppo.html)
-   a. **Schulman’s PPO paper**: [PPO Algorithm](https://arxiv.org/abs/1707.06347)
-   b. **GAE**: [High-Dimensional Continuous Control Using Generalized Advantage Estimation](https://arxiv.org/abs/1506.02438)
-5. **GRPO**:
-   a. **DeepSeekMath**: [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](https://arxiv.org/abs/2402.03300)
-   b. **DeepSeek-R1**: [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948)
-:::
-
 ## The RL Objective in the World of Large Language Models
 
 ::: {.callout-tip appearance="simple"}
-👉 The RL objective in the general RL world and in the world of large language models is essentially the same, though the expression is slightly different. Understanding this makes it easier to read articles from different RL settings. In particular:
+The RL objective in the general RL world and in the world of large language models is essentially the same, though the expression is slightly different. Understanding this makes it easier to read articles from different RL settings. In particular:
 
 - Articles from the general reinforcement learning world: `policy gradient`, `PPO`
 - Articles from the large language model world: `DeepSeek R1`, `Kimi K1.5 technical report`
@@ -266,3 +252,17 @@ DeepSeek-style methods and Kimi K1.5 both remove the critic, that is, the value 
 ![](images/no-critic.png){fig-align="center" width="90%" fig-cap="No critic in DeepSeek R1 and Kimi K1.5"}
 
 Beyond higher training efficiency and lower computational cost, the core reason is the following: people found that reflective CoT, or long CoT, matters. Allowing the model to explore reasoning paths in CoT that may look “actually wrong” can still be meaningful for improving reasoning ability. However, an ideal value function may do exactly the opposite: it can react very sensitively to these seemingly wrong attempts made by the policy, and penalize them too early.
+
+::: {.callout-tip appearance="simple"}
+**Main references**:
+
+1. **RL Basics**: [Spinning Up Part 1: Key Concepts in RL](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)
+2. **Policy Gradient Theory Basics**: [Spinning Up Part 3: Intro to Policy Optimization](https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html)
+3. **Basic Version of Policy Gradient**: [Spinning Up - Vanilla Policy Gradient](https://spinningup.openai.com/en/latest/algorithms/vpg.html)
+4. **PPO**: [Spinning Up - Proximal Policy Optimization](https://spinningup.openai.com/en/latest/algorithms/ppo.html)
+   a. **Schulman’s PPO paper**: [PPO Algorithm](https://arxiv.org/abs/1707.06347)
+   b. **GAE**: [High-Dimensional Continuous Control Using Generalized Advantage Estimation](https://arxiv.org/abs/1506.02438)
+5. **GRPO**:
+   a. **DeepSeekMath**: [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](https://arxiv.org/abs/2402.03300)
+   b. **DeepSeek-R1**: [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948)
+:::

@@ -12,6 +12,10 @@ format:
     title-block-style: default
 ---
 
+::: {.callout-tip appearance="simple"}
+This note is mainly intended as a supplement to the mathematical derivation of the RL optimization part in the [Kimi K1.5 technical report](https://arxiv.org/abs/2501.12599), specifically Section 2.3.2. It is organized into six parts, with the analysis and derivation presented step by step.
+:::
+
 ![](images/kimi-k1.5-report.png){fig-align="center" width="100%" fig-alt="Teaser image for the Kimi K1.5 technical report"}
 
 ## 1. Objective Function
