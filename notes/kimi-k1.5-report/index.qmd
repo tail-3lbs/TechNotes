@@ -1,0 +1,27 @@
+---
+title: "Kimi K1.5 Technical Report"
+date: 2026-04-20
+date-modified: 2026-04-20
+categories:
+  - RL
+  - LLM
+description: ""
+format:
+  html:
+    page-layout: full
+    title-block-style: default
+---
+
+![](images/kimi-k1.5-report.png){fig-align="center" width="100%" fig-alt="Teaser image for the Kimi K1.5 technical report"}
+
+## Overview
+
+Draft notes for the `Kimi K1.5` report.
+
+## Main References
+
+1. `TODO`
+
+## Notes
+
+`TODO`
