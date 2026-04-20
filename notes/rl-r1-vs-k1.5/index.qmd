@@ -23,17 +23,17 @@ format:
 
 ## Summary
 
-In my view, these methods are different in form but similar in spirit. The RL optimization parts of K1.5 and R1 can still be understood within the broader framework of policy gradient.
+In my view, these methods differ in form but are similar in spirit. The RL optimization parts of K1.5 and R1 can still be understood under a broader policy-gradient-style framework.
 
-First, GRPO can be placed under the policy gradient framework, because PPO itself belongs there, and the main difference between GRPO and PPO lies in how the advantage is computed.
+GRPO can be viewed this way because PPO itself belongs to the policy gradient family, and one important difference between GRPO and PPO lies in how the advantage-like training signal is constructed. In particular, GRPO replaces the usual critic-based value estimate with a relative comparison among multiple sampled outputs for the same prompt.
 
-As for K1.5, if we break it down, it still contains pieces such as a surrogate objective function, an advantage-like term, and a gradient-based update. These are all central ingredients of the policy gradient family. Although the K1.5 authors describe their method as originating from policy mirror descent, in actual optimization it is still updated through gradients. So I think it is reasonable to understand it together with policy gradient methods under a broader common framework.
+As for K1.5, if we break down its optimization procedure, it still contains elements such as a surrogate-style objective, an advantage-like weighting term, and gradient-based parameter updates. These are all central ingredients in policy-gradient-style optimization. Although the K1.5 authors motivate the method from policy mirror descent, it is still reasonable, from an optimization perspective, to understand it together with policy-gradient methods within a broader common framework.
 
 ## Multiple Samples for the Same Question
 
-At the same time, notice that K1.5 and GRPO both include the operation of sampling multiple outputs for the same prompt. These samples are then used to compute quantities such as the advantage or the baseline, which avoids using and maintaining a critic model, that is, a value function. This is something PPO did not have in its earlier form.
+At the same time, both K1.5 and GRPO involve sampling multiple outputs for the same prompt. These samples are then used to construct quantities such as relative advantages or baselines, which avoids the need to train and maintain a separate critic model, that is, a value function.
 
-The figure below explains why GRPO is considered an innovation. In one sentence: the baseline in GRPO is obtained by sampling multiple times for the same question.
+This is one reason GRPO is often viewed as an innovation: instead of relying on a learned value baseline, it derives a baseline-like signal by comparing multiple sampled outputs for the same question.
 
 <figure style="text-align: center; margin: 1.5rem 0;">
   <img src="images/baseline.png" alt="GRPO baseline illustration" style="width: 75%;" />
