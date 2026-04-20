@@ -8,6 +8,7 @@ categories:
 description: ""
 format:
   html:
+    page-layout: full
     title-block-style: default
 ---
 
