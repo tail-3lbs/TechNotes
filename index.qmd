@@ -18,11 +18,18 @@ listing:
     - date-modified
 ---
 
-This is the front page for technical notes, math notes, and longer-form blog posts. Each panel links to a full note page.
+This is the front page for technical notes, math notes, and longer-form blog posts.
 
 ```{=html}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const seriesPosts = [
+    "notes/rl-r1-vs-k1.5/",
+    "notes/policy-gradient-ppo-grpo/",
+    "notes/kimi-k1.5-report/",
+    "notes/llm-rl-baseline/"
+  ];
+
   const cards = document.querySelectorAll(".notes-home .quarto-grid-item .post-contents");
   const makeSegment = (label, value) => {
     const segment = document.createElement("span");
@@ -60,6 +67,58 @@ document.addEventListener("DOMContentLoaded", () => {
       if (node !== title) node.remove();
     }
     card.appendChild(meta);
+  }
+
+  const grid = document.querySelector(".notes-home #listing-listing .grid");
+  if (!grid) return;
+
+  const seriesItems = seriesPosts
+    .map((path, index) => {
+      const link = [...grid.querySelectorAll(".quarto-grid-link")]
+        .find((node) => node.getAttribute("href")?.includes(path));
+      const item = link?.querySelector(".quarto-grid-item");
+      const entry = link?.closest(".g-col-1");
+      return entry && link && item ? { entry, link, item, index } : null;
+    })
+    .filter(Boolean);
+
+  if (!seriesItems.length) return;
+
+  const seriesBox = document.createElement("section");
+  seriesBox.className = "home-series-box";
+  seriesBox.setAttribute("aria-labelledby", "home-series-title");
+
+  const seriesHeader = document.createElement("div");
+  seriesHeader.className = "home-series-header";
+  seriesHeader.innerHTML = `
+    <p class="home-series-kicker">Series</p>
+    <h2 id="home-series-title">RL for Large Language Models</h2>
+    <p class="home-series-description">A four-part reading path covering DeepSeek R1, Kimi K1.5, policy-gradient methods, PPO, GRPO, and baselines.</p>
+  `;
+
+  const seriesList = document.createElement("div");
+  seriesList.className = "home-series-list";
+
+  for (const { entry, link, item, index } of seriesItems) {
+    entry.classList.add("home-series-entry");
+    link.classList.add("home-series-link");
+    item.classList.add("home-series-item");
+    item.style.setProperty("--series-index", `"${index + 1}"`);
+    seriesList.appendChild(entry);
+  }
+
+  seriesBox.append(seriesHeader, seriesList);
+  grid.prepend(seriesBox);
+
+  const remainingEntries = [...grid.querySelectorAll(":scope > .g-col-1")];
+  if (remainingEntries.length) {
+    const standaloneHeader = document.createElement("div");
+    standaloneHeader.className = "home-standalone-header";
+    standaloneHeader.innerHTML = `
+      <p class="home-series-kicker">Standalone Notes</p>
+      <h2>Other Posts</h2>
+    `;
+    grid.insertBefore(standaloneHeader, remainingEntries[0]);
   }
 });
 </script>

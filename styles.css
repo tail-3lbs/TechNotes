@@ -74,6 +74,90 @@ main.content {
   max-width: 100%;
 }
 
+/* Notes Home Series */
+.notes-home .home-series-box {
+  background: rgba(255, 253, 248, 0.74);
+  border: 1px solid var(--notes-border);
+  border-radius: 18px;
+  box-shadow: 0 16px 36px rgba(68, 48, 28, 0.08);
+  padding: 1.1rem;
+}
+
+.notes-home .home-series-header {
+  border-bottom: 1px solid rgba(221, 211, 195, 0.9);
+  margin-bottom: 1rem;
+  padding: 0.3rem 0.4rem 1rem;
+}
+
+.notes-home .home-series-kicker {
+  color: var(--notes-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.notes-home .home-series-header h2,
+.notes-home .home-standalone-header h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.notes-home .home-series-description {
+  color: var(--notes-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  margin: 0.45rem 0 0;
+  max-width: 54rem;
+}
+
+.notes-home .home-series-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.notes-home .home-series-entry {
+  width: 100%;
+}
+
+.notes-home .home-series-link {
+  display: block;
+}
+
+.notes-home .home-series-item {
+  box-shadow: none;
+  position: relative;
+}
+
+.notes-home .home-series-item .post-contents {
+  padding-left: 4.1rem;
+}
+
+.notes-home .home-series-item .post-contents::before {
+  align-items: center;
+  background: rgba(165, 76, 43, 0.1);
+  border: 1px solid rgba(165, 76, 43, 0.18);
+  border-radius: 999px;
+  color: var(--notes-accent);
+  content: var(--series-index);
+  display: flex;
+  font-size: 0.95rem;
+  font-weight: 700;
+  height: 2rem;
+  justify-content: center;
+  left: 1.35rem;
+  position: absolute;
+  top: 1.45rem;
+  width: 2rem;
+}
+
+.notes-home .home-standalone-header {
+  padding: 0.65rem 0.35rem 0;
+}
+
 /* Notes Home Cards */
 .notes-home .quarto-grid-item {
   background: var(--notes-paper);
@@ -125,6 +209,21 @@ main.content {
 .notes-home .home-card-meta-label {
   color: var(--notes-ink);
   font-weight: 600;
+}
+
+@media (max-width: 575px) {
+  .notes-home .home-series-box {
+    border-radius: 14px;
+    padding: 0.75rem;
+  }
+
+  .notes-home .home-series-item .post-contents {
+    padding-left: 3.6rem;
+  }
+
+  .notes-home .home-series-item .post-contents::before {
+    left: 1rem;
+  }
 }
 
 /* Table Utilities */
