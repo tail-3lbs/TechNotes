@@ -18,8 +18,6 @@ listing:
     - date-modified
 ---
 
-This is the front page for technical notes, math notes, and longer-form blog posts.
-
 ```{=html}
 <script>
 document.addEventListener("DOMContentLoaded", () => {

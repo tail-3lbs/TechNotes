@@ -74,6 +74,10 @@ main.content {
   max-width: 100%;
 }
 
+.notes-home #title-block-header {
+  display: none;
+}
+
 /* Notes Home Series */
 .notes-home .home-series-box {
   background: rgba(255, 253, 248, 0.74);

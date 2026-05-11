@@ -8,9 +8,6 @@ website:
   title: "Jiaqi's Tech Notes"
   site-url: https://tail-3lbs.github.io/TechNotes/
   navbar:
-    left:
-      - href: index.qmd
-        text: TechNotes
     right:
       - href: https://tail-3lbs.github.io/
         text: Personal Homepage
